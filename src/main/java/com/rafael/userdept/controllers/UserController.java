@@ -4,6 +4,7 @@ import com.rafael.userdept.entities.User;
 import com.rafael.userdept.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,12 @@ public class UserController {
     @GetMapping
     public List<User> findAll() {
         return repository.findAll();
+
+    }
+
+    @GetMapping(value = "/{id}")
+    public User findById(@PathVariable Long id) {
+        return repository.findById(id).get();
 
     }
 }
