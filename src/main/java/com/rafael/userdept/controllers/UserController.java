@@ -30,4 +30,17 @@ public class UserController {
     public User insert(@RequestBody User user) {
         return repository.save(user);
     }
+
+    @PutMapping(value = "/{id}")
+    public User update(@PathVariable Long id, @RequestBody User user) {
+        return repository.findById(id).map( oldUser -> {
+            oldUser.setName(user.getName());
+            oldUser.setDepartment(user.getDepartment());
+            oldUser.setEmail(user.getEmail());
+            return repository.save(user);
+        }).orElseGet(() -> {
+            user.setId(id);
+            return repository.save(user);
+        });
+    }
 }
